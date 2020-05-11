@@ -9,8 +9,9 @@ Author: Mjr_Mojo
 Date: 2020-05-11
 
 Results as of 2020-05-11 @ 20:23 GMT+13:
-In 1000 digits of Pi there are 327 unique, valid nHentai codes.
-In 10,000 digits of Pi there are 3092
+ - In 1000 digits of Pi there are 327 unique, valid nHentai codes.
+ - In 10,000 digits of Pi there are 3092 unique valid nHentai codes. 239 of
+   which are in English.
 """
 
 import requests
