@@ -43,3 +43,4 @@ recently uploaded doujin to nHentai.
 - Logging where in π the doujin is found, including any duplicates
 - Automatically find the most recent doujin uploaded to set the upper bound on
   the key search.
+- Run the system on 1250000 digits of π data set
