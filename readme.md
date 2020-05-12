@@ -38,7 +38,6 @@ recently uploaded doujin to nHentai.
 
 ## To Do (?)
 - Make the output a little more friendly?
-- Optionally write out the data to a file
 - Automatic statistics generation with time stamping
 - Logging where in π the doujin is found, including any duplicates
 - Automatically find the most recent doujin uploaded to set the upper bound on
