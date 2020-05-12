@@ -19,7 +19,7 @@ God, I'm a degenerate.
 
 On a Linux based system or WSL
 ```
-git clone URL
+git clone https://github.com/MjrMojo/nHenPi.git
 cd nHenPi
 python3 nHenPi.py
 ```
