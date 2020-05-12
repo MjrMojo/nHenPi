@@ -72,7 +72,7 @@ keys = set()
 for i in range(len(PI)-5):
     key = int(PI[i:i+6])
     if key <= CURRENT_HIGHEST_KEY:
-        if not key in keys:
+        if not key in keys: #ensure the key is unique to prevent duplicates
             keys.add(key)
             title, language, tags = get_data_on_this_filth(key)
             if title != REMOVED:
