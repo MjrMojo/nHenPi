@@ -16,6 +16,7 @@ Results as of 2020-05-11 @ 20:23 GMT+13:
 
 import requests
 import json
+import time
 
 API_URL_NHENTAI = 'https://nhentai.net/api/gallery/'
 REMOVED = "removed"
@@ -29,7 +30,7 @@ Tags: {}
 ==============================
 """
 
-CURRENT_HIGHEST_KEY = 312909 #As of 2020-05-12 @ 16:08 (GMT+12)
+OUTPUT_HEADER_FORMAT = "There are {} nHentai doujins in the first {} digits of \u03C0 as of {}"
 
 pi1000 = "31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989"
 
@@ -39,6 +40,14 @@ file = open("PI100KDP.TXT")
 PI = "3" + file.readline()
 file.close()
 
+
+def get_latest_id():
+    request = requests.get(API_URL_NHENTAI + "all")
+    if not request.ok:
+        return 312909, "2020-05-12 @ 16:08 (GMT+1200)"
+    else:
+        first_result = request.json()["result"][0]
+        return int(first_result["id"]), time.strftime("%Y-%m-%d @ %H:%M (GMT%z)")
 
 
 def get_data_on_this_filth(key):
@@ -67,11 +76,13 @@ def get_data_on_this_filth(key):
     return title, language, tags
 
 
+latest_key, latest_key_time_stamp = get_latest_id();
+
 sources = []
 keys = set()
 for i in range(len(PI)-5):
     key = int(PI[i:i+6])
-    if key <= CURRENT_HIGHEST_KEY:
+    if key <= latest_key:
         if not key in keys: #ensure the key is unique to prevent duplicates
             keys.add(key)
             title, language, tags = get_data_on_this_filth(key)
@@ -86,6 +97,10 @@ eng_sources = [i for i in sources if i[2] == "english"]
 print ("{} of them are in english to boot.".format(len(eng_sources)))
 
 output_file = open("output.txt", "w", encoding='utf-8')
+
+output_file.write(OUTPUT_HEADER_FORMAT.format(len(sources), len(PI) - 1,
+                                              latest_key_time_stamp))
+
 for source in sources:
     output_file.write(OUTPUT_FORMAT_STRING.format(source[0], source[1],
                                                   source[2], source[3]))
