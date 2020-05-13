@@ -30,7 +30,12 @@ Tags: {}
 ==============================
 """
 
-OUTPUT_HEADER_FORMAT = "There are {} nHentai doujins in the first {} digits of \u03C0 as of {}"
+OUTPUT_HEADER_FORMAT = """There are {num} nHentai doujins in the first {pi_len} digits of \u03C0 as of {timestamp}
+Language split: - {lang1_str:13}: {lang1_num:6} ({lang1_perc:>5.2f} %)
+                - {lang2_str:13}: {lang2_num:6} ({lang2_perc:>5.2f} %)
+                - {lang3_str:13}: {lang3_num:6} ({lang3_perc:>5.2f} %)
+                - Uncategorised: {uncat_num:6} ({uncat_perc:>5.2f} %)
+"""
 
 pi1000 = "31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989"
 
@@ -39,6 +44,10 @@ pi1000 = "3141592653589793238462643383279502884197169399375105820974944592307816
 file = open("PI100KDP.TXT")
 PI = "3" + file.readline()
 file.close()
+
+
+def count(l, key):
+    return sum(map(lambda x: x[2] == key, l))
 
 
 def get_latest_id():
@@ -92,14 +101,33 @@ for i in range(len(PI)-5):
 
 print("\n\n\n\n\nThere are {} weeb numbers in the first {} digits of Pi".format(len(sources), len(PI)))
 
-eng_sources = [i for i in sources if i[2] == "english"]
-
-print ("{} of them are in english to boot.".format(len(eng_sources)))
+print ("{} of them are in english to boot.".format(count(sources, "english")))
 
 output_file = open("output.txt", "w", encoding='utf-8')
 
-output_file.write(OUTPUT_HEADER_FORMAT.format(len(sources), len(PI) - 1,
-                                              latest_key_time_stamp))
+num = len(sources)
+num_eng = count(sources, "english")
+num_jap = count(sources, "japanese")
+num_chin = count(sources, "chinese")
+num_uncat = num - (num_eng + num_jap + num_chin)
+
+lang_num = [(num_eng, "english"), (num_jap, "japanese"), (num_chin, "chinese")]
+lang_num.sort(key=lambda x: x[0], reverse=True)
+
+output_file.write(OUTPUT_HEADER_FORMAT.format(num=num,
+                                              pi_len=len(PI) - 1,
+                                              timestamp=latest_key_time_stamp,
+                                              lang1_str=lang_num[0][1].title(),
+                                              lang2_str=lang_num[1][1].title(),
+                                              lang3_str=lang_num[2][1].title(),
+                                              lang1_num=lang_num[0][0],
+                                              lang2_num=lang_num[1][0],
+                                              lang3_num=lang_num[2][0],
+                                              uncat_num=num_uncat,
+                                              lang1_perc=(lang_num[0][0] / num) * 100,
+                                              lang2_perc=(lang_num[1][0] / num) * 100,
+                                              lang3_perc=(lang_num[2][0] / num) * 100,
+                                              uncat_perc=(num_uncat / num) * 100))
 
 for source in sources:
     output_file.write(OUTPUT_FORMAT_STRING.format(source[0], source[1],
