@@ -105,12 +105,16 @@ print ("{} of them are in english to boot.".format(count(sources, "english")))
 
 output_file = open("output.txt", "w", encoding='utf-8')
 
+#Count the number of sources we have.
 num = len(sources)
 num_eng = count(sources, "english")
 num_jap = count(sources, "japanese")
 num_chin = count(sources, "chinese")
 num_uncat = num - (num_eng + num_jap + num_chin)
 
+#Create the lang_num array and order it based on which language is the most to
+#least prevalent. This is the order in which they will be displayed in the
+#output header.
 lang_num = [(num_eng, "english"), (num_jap, "japanese"), (num_chin, "chinese")]
 lang_num.sort(key=lambda x: x[0], reverse=True)
 
