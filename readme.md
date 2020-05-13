@@ -37,7 +37,5 @@ newly uploaded doujins that occur in π, alter line 23 to be the key of the most
 recently uploaded doujin to nHentai.
 
 ## To Do (?)
-- Make the output a little more friendly?
-- Automatic statistics generation with time stamping
 - Logging where in π the doujin is found, including any duplicates
 - Run the system on 1250000 digits of π data set
