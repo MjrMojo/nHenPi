@@ -20,8 +20,8 @@ var newContent = document.createTextNode(pi1000);
 
 newDiv.appendChild(newContent);
 
-var currentDiv = document.getElementById("div1"); 
-document.body.insertBefore(newDiv, currentDiv); 
+var currentDiv = document.getElementById("div1");
+document.body.insertBefore(newDiv, currentDiv);
 
 document.onwheel = function(event) {
     if (event.deltaY != 0) {
@@ -67,17 +67,17 @@ function placeBars() {
     var inputText = newDiv;
     var innerHTML = inputText.innerHTML;
     var fudgeFactor = 15
-    
+
     for (var i = 0; i < locations.length; i++) {
         var startIndex = locations[i][0] + 1;
         var stopIndex = locations[i][1] + 1;
 
         var startStr = innerHTML.substring(0, startIndex);
         var codeStr = innerHTML.substring(startIndex, stopIndex);
-        
+
         var barPos = calculateWordDimensions(startStr);
         var barWidth = calculateWordDimensions(codeStr).width;
-        
+
         if (i % 2 == 0) {
             var ypos = (height / 2);
         } else {
