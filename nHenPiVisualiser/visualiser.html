@@ -11,6 +11,7 @@ const locations = [[1, 7], [3, 9], [6, 12], [16, 22], [21, 27], [28, 34], [32, 3
 window.addEventListener('load', function () {
     console.log('This function is executed once the page is fully loaded');
     console.log(PI);
+    placeBraces();
 });
 
 var newDiv = document.createElement("div");
@@ -97,6 +98,76 @@ function generateBar(startPoint, endPoint, height) {
     newBar += "px;height:1px;background:#000'></div>";
     document.body.innerHTML += newBar;
 }
+
+function placeBraces() {
+    var inputText = newDiv;
+    var innerHTML = inputText.innerHTML;
+    var fudgeFactor = 15
+
+    var svg = document.createElementNS(null, "svg");
+
+    for (var i = 0; i < locations.length; i++) {
+        var startIndex = locations[i][0] + 1;
+        var stopIndex = locations[i][1] + 1;
+
+        var startStr = innerHTML.substring(0, startIndex);
+        var codeStr = innerHTML.substring(startIndex, stopIndex);
+
+        var barPos = calculateWordDimensions(startStr);
+        var barWidth = calculateWordDimensions(codeStr).width;
+
+        makeCurlyBraceReal(i, barPos.width, barWidth, i % 2 == 1, i % 3);
+    }
+
+    newDiv.innerHTML += "";
+}
+
+window.onresize = onResizeEvent;
+
+function onResizeEvent() {
+    for (var i = 0; i < locations.length; i++) {
+        var el = document.getElementById("bracket-" + i);
+        el.parentNode.removeChild(el);
+    }
+
+    placeBraces();
+}	
+
+
+function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
+    var newBrace = document.createElement('img');
+    newBrace.setAttribute("src", "bracket.png");
+    newBrace.setAttribute("id", "bracket-" + id);
+    var style = "";
+    style += "position: absolute; top: ";
+    if (isBottom) {
+        style += 1;
+        style += "vw; transform: rotate(180deg);"
+    } else {
+        style += -3;
+        style += "vw;";
+    }
+    style += "left: ";
+    style += xpos;
+    style += "px;";
+
+    switch (colour) {
+        //filtering operations calculated with this tool: https://codepen.io/sosuke/pen/Pjoqqp
+        case 1: //red
+            style += "filter: invert(19%) sepia(90%) saturate(5578%) hue-rotate(356deg) brightness(105%) contrast(120%);";
+            break;
+        case 2: //blue
+            style += "filter: invert(9%) sepia(99%) saturate(7500%) hue-rotate(248deg) brightness(89%) contrast(144%);";
+            break;
+        default:
+            //do nothing leave them as black
+            break;
+    }
+
+    newBrace.setAttribute("style", style);
+    newBrace.setAttribute("width", width + "px");
+    newDiv.appendChild(newBrace);
+}
 </script>
 
 <style>
@@ -124,6 +195,5 @@ div.pi_text {
 }
 </style>
 
-<button onclick="placeBars()">Highlight</button>
 </body>
 </html>
