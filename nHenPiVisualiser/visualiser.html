@@ -109,8 +109,8 @@ function placeBraces() {
 
     for (var i = 0; i < dataset.length; i++) {
         var startIndex = dataset[i]['location'][0] + 1;
-        var codeStr = dataset[i]['key'];
-
+        var stopIndex = dataset[i]['location'][1] + 1;
+        var codeStr = innerHTML.substring(startIndex, stopIndex);
         var startStr = innerHTML.substring(0, startIndex);
 
         var barPos = calculateWordDimensions(startStr);
