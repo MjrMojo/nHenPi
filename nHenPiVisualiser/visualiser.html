@@ -9,10 +9,17 @@ const pi1000 = "3.14159265358979323846264338327950288419716939937510582097494459
 const width  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 const height = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
 
+var currentEndBrace = 25;
+
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+  currentEndBrace = 25;
+}
+
 window.addEventListener('load', function () {
     console.log('This function is executed once the page is fully loaded');
     console.log(PI);
-    placeBraces();
+    placeBraces(0, currentEndBrace);
 });
 
 var newDiv = document.createElement("div");
@@ -28,6 +35,9 @@ document.onwheel = function(event) {
     if (event.deltaY != 0) {
         window.scrollBy(event.deltaY, 0);
     }
+
+    placeBraces(currentEndBrace, currentEndBrace + 25);
+    currentEndBrace += 25;
 }
 
 //Function from https://stackoverflow.com/questions/43965616/getting-character-width-in-javascript
@@ -100,14 +110,14 @@ function generateBar(startPoint, endPoint, height) {
     document.body.innerHTML += newBar;
 }
 
-function placeBraces() {
+function placeBraces(startBrace, endBrace) {
     var inputText = newDiv;
     var innerHTML = inputText.innerHTML;
     var fudgeFactor = 15
 
     var svg = document.createElementNS(null, "svg");
 
-    for (var i = 0; i < dataset.length; i++) {
+    for (var i = startBrace; i < endBrace; i++) {
         var startIndex = dataset[i]['location'][0] + 1;
         var stopIndex = dataset[i]['location'][1] + 1;
         var codeStr = innerHTML.substring(startIndex, stopIndex);
@@ -123,7 +133,7 @@ function placeBraces() {
 window.onresize = onResizeEvent;
 
 function onResizeEvent() {
-    for (var i = 0; i < dataset.length; i++) {
+    for (var i = 0; i < currentEndBrace; i++) {
         var el = document.getElementById("bracket-" + i);
         if (el) {
             el.parentNode.removeChild(el);
@@ -135,7 +145,10 @@ function onResizeEvent() {
         el.parentNode.removeChild(el);
     }
 
-    placeBraces();
+    window.scrollTo(0, 0);
+    currentEndBrace = 25;
+
+    placeBraces(0, currentEndBrace);
 }
 
 function createThumbnailElement(mediaID, imgWidth) {
