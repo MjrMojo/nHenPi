@@ -124,7 +124,9 @@ window.onresize = onResizeEvent;
 function onResizeEvent() {
     for (var i = 0; i < locations.length; i++) {
         var el = document.getElementById("bracket-" + i);
-        el.parentNode.removeChild(el);
+        if (el) {
+            el.parentNode.removeChild(el);
+        }
     }
 
     placeBraces();
