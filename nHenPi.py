@@ -97,10 +97,12 @@ def get_data_on_this_filth(key):
 latest_key, latest_key_time_stamp = get_latest_id();
 
 sources = []
-keys = set()
+keys = set() #the set of already found keys to prevent multiple request
+key_occurrence_count = dict()
 for i in range(len(PI)-5):
     key = int(PI[i:i+6])
     if key <= latest_key:
+        key_occurrence_count[key] = key_occurrence_count.get(key, 0) + 1
         if not key in keys: #ensure the key is unique to prevent duplicates
             keys.add(key)
             title, language, tags, media_key = get_data_on_this_filth(key)
