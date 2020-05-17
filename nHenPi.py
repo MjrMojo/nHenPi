@@ -69,7 +69,7 @@ def get_data_on_this_filth(key):
     request = requests.get(API_URL_NHENTAI + str(key))
     if not request.ok:
         #if the filth has been removed
-        return REMOVED, REMOVED, [REMOVED]
+        return REMOVED, REMOVED, [REMOVED], REMOVED
 
     key_data = request.json();
     title_dict = key_data["title"]
