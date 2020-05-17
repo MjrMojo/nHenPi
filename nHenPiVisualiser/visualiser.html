@@ -132,6 +132,24 @@ function onResizeEvent() {
     placeBraces();
 }
 
+function createThumbnailElement(mediaID) {
+    var thumbnail = document.createElement("img");
+    thumbnail.setAttribute("src", "https://t.nhentai.net/galleries/" + mediaID + "/cover.jpg");
+    thumbnail.setAttribute("id", "overlay_thumnail");
+    
+    var style = "";
+    style += "position: absolute; top: ";
+    style += -15;
+    style += "vmax;";
+    style += "left: ";
+    style += event.target.offsetLeft;
+    thumbnail.setAttribute("style", style);
+    thumbnail.setAttribute("width", event.target.offsetWidth + "px");
+    style += "px;";
+    
+    return thumbnail
+}
+
 function changeDef(event){
     var prev_el = document.getElementById("overlay_thumnail");
     if (prev_el) {
@@ -139,20 +157,7 @@ function changeDef(event){
     }
     
     key = parseInt(event.target.id.split('-')[1]);
-    
-    var thumbnail = document.createElement("img");
-    thumbnail.setAttribute("src", "https://t.nhentai.net/galleries/" + dataset[key]['media_id'] + "/cover.jpg");
-    thumbnail.setAttribute("id", "overlay_thumnail");
-    
-    var style = "";
-    style += "position: absolute; top: ";
-    style += -3;
-    style += "vmax;";
-    style += "left: ";
-    style += event.target.offsetLeft;
-    thumbnail.setAttribute("style", style);
-    thumbnail.setAttribute("width", event.target.offsetWidth + "px");
-    style += "px;";
+    var thumbnail = createThumbnailElement(dataset[key]['media_id']);
     
     newDiv.appendChild(thumbnail);
 }
