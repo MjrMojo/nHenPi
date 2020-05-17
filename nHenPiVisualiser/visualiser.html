@@ -112,6 +112,8 @@ function placeBraces() {
 
         var startStr = innerHTML.substring(0, startIndex);
         var codeStr = innerHTML.substring(startIndex, stopIndex);
+        
+        locations[i].push(codeStr);
 
         var barPos = calculateWordDimensions(startStr);
         var barWidth = calculateWordDimensions(codeStr).width;
@@ -142,10 +144,10 @@ function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
     style += "position: absolute; top: ";
     if (isBottom) {
         style += 1;
-        style += "vw; transform: rotate(180deg);"
+        style += "vmax; transform: rotate(180deg);"
     } else {
         style += -3;
-        style += "vw;";
+        style += "vmax;";
     }
     style += "left: ";
     style += xpos;
@@ -172,7 +174,9 @@ function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
 
 <style>
 body {
-    overflow: hidden; /* Hide scrollbars */
+    /*overflow: hidden; /* Hide scrollbars */
+    min-height: 100%;
+    margin: 0;
 }
 
 .highlight {
@@ -182,7 +186,7 @@ body {
 div.pi_text {
     position: absolute;
     top: 50%;
-    font-size: 3vw;
+    font-size: 3vmax;
 }
 
 .textDimensionCalculation {
@@ -191,7 +195,7 @@ div.pi_text {
     height: auto;
     width: auto;
     white-space: nowrap;
-    font-size: 3vw;
+    font-size: 3vmax;
 }
 </style>
 
