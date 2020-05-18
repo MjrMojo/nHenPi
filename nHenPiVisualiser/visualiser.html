@@ -74,41 +74,6 @@ var dimensions = calculateWordDimensions('42 is the answer!'); <!--obviously a h
 console.log(dimensions.width);
 };
 
-function placeBars() {
-    var inputText = newDiv;
-    var innerHTML = inputText.innerHTML;
-    var fudgeFactor = 15
-
-    for (var i = 0; i < locations.length; i++) {
-        var startIndex = locations[i][0] + 1;
-        var stopIndex = locations[i][1] + 1;
-
-        var startStr = innerHTML.substring(0, startIndex);
-        var codeStr = innerHTML.substring(startIndex, stopIndex);
-
-        var barPos = calculateWordDimensions(startStr);
-        var barWidth = calculateWordDimensions(codeStr).width;
-
-        if (i % 2 == 0) {
-            var ypos = (height / 2);
-        } else {
-            var ypos = (height / 2) + barPos.height;
-        }
-        generateBar(barPos.width + fudgeFactor, barPos.width + barWidth, ypos);
-    }
-}
-
-function generateBar(startPoint, endPoint, height) {
-    var newBar = "";
-    newBar += "<div style='position:absolute;left:";
-    newBar += startPoint;
-    newBar += "px;top:";
-    newBar += height;
-    newBar += "px;width:";
-    newBar += endPoint - startPoint;
-    newBar += "px;height:1px;background:#000'></div>";
-    document.body.innerHTML += newBar;
-}
 
 function placeBraces(startBrace, endBrace) {
     var inputText = newDiv;
