@@ -114,7 +114,7 @@ function placeBraces(startBrace, endBrace) {
 
         if (i % 50 == 0) {
             lastPiWidthIndex = startIndex;
-            if (i % 1000 == 0) { //every thousand doujins do the most accurate calculation to prevent to big an error building
+            if (i % 250 == 0) { //every 250 doujins do the more accurate calculation to prevent too big an error building
                 lastPiWidth = calculateWordDimensions(innerHTML.substring(0, startIndex)).width;
             } else {
                 lastPiWidth += barPos.width; //for most doujins just adding on the width every hundreth is enough though
