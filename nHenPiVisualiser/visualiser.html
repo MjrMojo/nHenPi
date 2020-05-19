@@ -37,6 +37,7 @@ newDiv.className = "pi_text";
 var newContent = document.createElement("text")
 newContent.innerHTML = pi_digits[0];
 newContent.setAttribute("id", "pi_text");
+newContent.setAttribute("style", "padding-top: 3px; padding-bottom: 3px; vertical-align: center; background-color: #1f1f1f;");
 
 newDiv.appendChild(newContent);
 
@@ -161,7 +162,7 @@ function createInfoDivInternals(key, div, text_at_top, imgWidth) {
     var title = document.createElement("p");
     title.innerHTML += dataset[key]['title'];
     
-    var style = "text-align: center; font-size: 1.5vmax; margin: 0px; align:center;";
+    var style = "text-align: center; font-size: 14px; margin: 0px; align:center; font-family: 'Noto Sans',sans-serif; color: #d9d9d9; font-weight: 700; padding: 3px;";
     title.setAttribute("style", style);
     
     if (text_at_top) {
@@ -184,14 +185,16 @@ function changeDef(event){
     var doujin_info = document.createElement("div");
     doujin_info.setAttribute("id", "doujin_info");
     
+    console.log(key);
+    
     var place_div_on_top = key % 2 == 0;
     
-    createInfoDivInternals(key, doujin_info, place_div_on_top, event.target.offsetWidth);
+    createInfoDivInternals(key, doujin_info, false, event.target.offsetWidth * 1.20);
     
     var style = "";
     if (place_div_on_top) {
         style += "position: absolute; bottom: ";
-        style += 5;
+        style += 4.75;
     } else {
         style += "position: absolute; top: ";
         style += 5;
@@ -200,7 +203,7 @@ function changeDef(event){
     style += event.target.offsetLeft - 0.10 * event.target.offsetWidth;
     style += "px; width: ";
     style += event.target.offsetWidth * 1.20;
-    style += "px; text-align: center;"
+    style += "px; text-align: center; background-color: #404040;"
     doujin_info.setAttribute("style", style);
     
     
@@ -216,10 +219,12 @@ function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
     var style = "";
     style += "position: absolute; top: ";
     if (isBottom) {
+        //Bottom brace
         style += 1;
         style += "vmax; transform: rotate(180deg);"
     } else {
-        style += -3;
+        //Top brace
+        style += -3.5;
         style += "vmax;";
     }
     style += "left: ";
@@ -252,6 +257,10 @@ body {
     /*overflow: hidden; /* Hide scrollbars */
     min-height: 100%;
     margin: 0;
+    background-color: #0d0d0d;
+    font-family: 'Noto Sans',sans-serif;
+    color: #d9d9d9;
+    -webkit-font-smoothing: antialiased;
 }
 
 .highlight {
@@ -262,6 +271,18 @@ div.pi_text {
     position: absolute;
     top: 50%;
     font-size: 3vmax;
+    font-weight: 700;
+    vertical-align: center;
+    background-color: #1f1f1f;
+}
+
+div.doujin_info {
+    font-color: #d9d9d9;
+    text-align: center;
+    font-size: 1.5vmax;
+    background-color: #404040;
+    margin: 0px;
+    align:center;
 }
 
 .textDimensionCalculation {
@@ -271,8 +292,19 @@ div.pi_text {
     width: auto;
     white-space: nowrap;
     font-size: 3vmax;
+    font-weight: 700;
+}
+
+.logo {
+    position:fixed;
+    top:0;
+    background-color:#1f1f1f;
+    width:100%;
+    z-index:100;
 }
 </style>
-
+<div class="logo">
+    <center><img src="logo.svg" style="align:center;" width="46" height="50"/></center>
+</div>
 </body>
 </html>
