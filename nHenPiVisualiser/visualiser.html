@@ -13,10 +13,12 @@ var currentEndBrace = 25;
 var currentPiChunk = 0;
 var lastPiWidthIndex = 0;
 var lastPiWidth = 0;
+var currentPiLength = 0;
 
 function appendAnotherPiChunk() {
     if (currentPiChunk < 100) {
         currentPiChunk += 1; //Increment currentPiChunk here to prevent race condition appending multiple chunks at once
+        currentPiLength += pi_digits[currentPiChunk].length;
         document.getElementById("pi_text").innerHTML += pi_digits[currentPiChunk];
     }
 }
@@ -36,6 +38,7 @@ var newDiv = document.createElement("div");
 newDiv.className = "pi_text";
 var newContent = document.createElement("text")
 newContent.innerHTML = pi_digits[0];
+currentPiLength += pi_digits[0].length;
 newContent.setAttribute("id", "pi_text");
 newContent.setAttribute("style", "padding-top: 3px; padding-bottom: 3px; vertical-align: center; background-color: #1f1f1f;");
 
@@ -47,7 +50,8 @@ document.body.insertBefore(newDiv, currentDiv);
 document.onwheel = function(event) {
     if (event.deltaY != 0) {
         window.scrollBy(event.deltaY, 0);
-        if (currentEndBrace > (250 * (currentPiChunk + 1))) {
+        if (dataset[currentEndBrace + 25]['location'][1] > currentPiLength) {
+        //if (currentEndBrace +2 > (200 * (currentPiChunk + 1))) {
             appendAnotherPiChunk();
         }
 
@@ -138,6 +142,7 @@ function onResizeEvent() {
     currentEndBrace = 25;
     lastPiWidthIndex = 0;
     lasPiWidth = 0;
+    currentPiLength = 0;
     placeBraces(0, currentEndBrace);
 }
 
