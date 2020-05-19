@@ -88,13 +88,6 @@ var calculateWordDimensions = function(text, classes, escape) {
     return dimensions;
 };
 
-function test() {
-var dimensions = calculateWordDimensions('42 is the answer!'); <!--obviously a hitchhikers guide fan, lol --->
-
-console.log(dimensions.width);
-};
-
-
 function placeBraces(startBrace, endBrace) {
     var innerHTML = document.getElementById("pi_text").innerHTML;
     var fudgeFactor = 15
@@ -256,6 +249,7 @@ function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
     //document.body.appendChild(newBrace);
     newDiv.appendChild(newBrace);
 }
+
 </script>
 
 <style>
