@@ -43,7 +43,7 @@ to scroll through π seeing the doujins that ocurr. So I made the visualiser. I
 spent far too long on this... I even modified the nHentai logo to have a π 
 symbol in it.
 
-![Screenshot of Visualiser](nHentaiVisualiseri/sample_image.png)
+![Screenshot of Visualiser](nHentaiVisualiser/sample_image.png)
 
 To run it you will have to download the nHenPiVisualiser folder and click
 `visualiser.html`. I would host it on a website but nHentai (qute fairly) does
