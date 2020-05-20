@@ -182,7 +182,8 @@ function createInfoDivInternals(key, div, text_at_top, imgWidth) {
     }
 }
 
-function changeDef(event){
+function onBraceHover(event){
+    //Load the cover page and title of the filth the user is currently hovering over
     var prev_el = document.getElementById("doujin_info");
     if (prev_el) {
         prev_el.parentNode.removeChild(prev_el);
@@ -255,7 +256,7 @@ function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
 
     newBrace.setAttribute("style", style);
     newBrace.setAttribute("width", width + "px");
-    newBrace.onmouseover = changeDef;
+    newBrace.onmouseover = onBraceHover;
     //document.body.appendChild(newBrace);
     newDiv.appendChild(newBrace);
 }
