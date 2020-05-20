@@ -47,16 +47,26 @@ newDiv.appendChild(newContent);
 var currentDiv = document.getElementById("div1");
 document.body.insertBefore(newDiv, currentDiv);
 
-document.onwheel = function(event) {
-    if (event.deltaY != 0) {
-        window.scrollBy(event.deltaY, 0);
+function isLastBraceInViewport(endBrace) {
+    var elem = document.getElementById("bracket-" + endBrace);
+    var bounding = elem.getBoundingClientRect();
+    return bounding.right <= (window.innerWidth || document.documentElement.clientWidth);
+};
+
+document.onscroll = function (event) {
+    while(isLastBraceInViewport(currentEndBrace - 1)) {
         if (dataset[currentEndBrace + 25]['location'][1] > currentPiLength) {
-        //if (currentEndBrace +2 > (200 * (currentPiChunk + 1))) {
             appendAnotherPiChunk();
         }
 
         placeBraces(currentEndBrace, currentEndBrace + 25);
         currentEndBrace += 25;
+    }
+}
+
+document.onwheel = function(event) {
+    if (event.deltaY != 0) {
+        window.scrollBy(event.deltaY, 0);
     }
 };
 
