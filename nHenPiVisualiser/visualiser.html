@@ -29,8 +29,8 @@ window.onbeforeunload = function () {
 }
 
 window.addEventListener('load', function () {
-    console.log('This function is executed once the page is fully loaded');
-    console.log(PI);
+    //console.log('This function is executed once the page is fully loaded');
+    //console.log(PI);
     placeBraces(0, currentEndBrace);
 });
 
@@ -183,7 +183,7 @@ function changeDef(event){
     var doujin_info = document.createElement("div");
     doujin_info.setAttribute("id", "doujin_info");
     
-    console.log(key);
+    //console.log(key);
     
     var place_div_on_top = key % 2 == 0;
     
