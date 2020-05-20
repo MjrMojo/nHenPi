@@ -132,7 +132,7 @@ function onResizeEvent() {
             el.parentNode.removeChild(el);
         }
     }
-    
+
     var el = document.getElementById("doujin_info");
     if (el) {
         el.parentNode.removeChild(el);
@@ -159,17 +159,17 @@ function createThumbnailElement(mediaID, imgWidth) {
 function createInfoDivInternals(key, div, text_at_top, imgWidth) {
     div.setAttribute("class", "item");
     var thumbnail = createThumbnailElement(dataset[key]['media_id'], imgWidth);
-        
+
     var link = document.createElement("a");
     link.setAttribute("href", "https://nhentai.net/g/" + dataset[key]['key']);
     link.appendChild(thumbnail);
-    
+
     var title = document.createElement("p");
     title.innerHTML += dataset[key]['title'];
-    
+
     var style = "text-align: center; font-size: 14px; margin: 0px; align:center; font-family: 'Noto Sans',sans-serif; color: #d9d9d9; font-weight: 700; padding: 3px;";
     title.setAttribute("style", style);
-    
+
     if (text_at_top) {
         div.appendChild(title);
         div.appendChild(link);
@@ -185,14 +185,14 @@ function onBraceHover(event){
     if (prev_el) {
         prev_el.parentNode.removeChild(prev_el);
     }
-    
+
     key = parseInt(event.target.id.split('-')[1]);
-    
+
     var doujin_info = document.createElement("div");
     doujin_info.setAttribute("id", "doujin_info");
-    
+
     createInfoDivInternals(key, doujin_info, false, event.target.offsetWidth * 1.20);
-    
+
     var style = "";
     if (place_div_on_top) {
         style += "position: absolute; bottom: ";
@@ -207,9 +207,7 @@ function onBraceHover(event){
     style += event.target.offsetWidth * 1.20;
     style += "px; text-align: center; background-color: #404040;"
     doujin_info.setAttribute("style", style);
-    
-    
-    
+
     newDiv.appendChild(doujin_info);
 }
 
