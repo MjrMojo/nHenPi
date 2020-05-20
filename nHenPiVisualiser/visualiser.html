@@ -194,7 +194,7 @@ function onBraceHover(event){
     createInfoDivInternals(key, doujin_info, false, event.target.offsetWidth * 1.20);
 
     var style = "";
-    if (place_div_on_top) {
+    if (key % 2 == 0) {
         style += "position: absolute; bottom: ";
         style += 4.75;
     } else {
