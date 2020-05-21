@@ -160,6 +160,7 @@ function createThumbnailElement(mediaID, imgWidth) {
     thumbnail.setAttribute("id", "overlay_thumnail");
     thumbnail.setAttribute("width", imgWidth + "px"); 
     thumbnail.setAttribute("style", "text-align:center; margin: 0px;");
+    thumbnail.setAttribute("onerror", "this.onerror=null;this.src='https://t.nhentai.net/galleries/" + mediaID + "/cover.png';");
     return thumbnail
 }
 
