@@ -46,12 +46,16 @@ document.body.insertBefore(newDiv, currentDiv);
 
 function isLastBraceInViewport(endBrace) {
     var elem = document.getElementById("bracket-" + endBrace);
-    var bounding = elem.getBoundingClientRect();
-    return bounding.right <= (window.innerWidth || document.documentElement.clientWidth);
+    if (elem) {
+        var bounding = elem.getBoundingClientRect();
+        return bounding.right > (window.innerWidth || document.documentElement.clientWidth);
+    } else {
+        return false;
+    }
 };
 
-document.onscroll = function (event) {
-    while(isLastBraceInViewport(currentEndBrace - 1)) {
+function checkToLoadMoreContent(event) {
+    while(!isLastBraceInViewport(currentEndBrace - 1)) {
         if (dataset[currentEndBrace + 25]['location'][1] > currentPiLength) {
             appendAnotherPiChunk();
         }
@@ -60,6 +64,8 @@ document.onscroll = function (event) {
         currentEndBrace += 25;
     }
 }
+
+document.onscroll = checkToLoadMoreContent;
 
 document.onwheel = function(event) {
     if (event.deltaY != 0) {
