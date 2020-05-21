@@ -128,9 +128,7 @@ function placeBraces(startBrace, endBrace) {
     }
 }
 
-window.onresize = onResizeEvent;
-
-function onResizeEvent() {
+window.onresize = function(event){
     for (var i = 0; i < currentEndBrace; i++) {
         var el = document.getElementById("bracket-" + i);
         if (el) {
@@ -143,13 +141,18 @@ function onResizeEvent() {
         el.parentNode.removeChild(el);
     }
 
-    window.scrollTo(0, 0);
-    currentEndBrace = 25;
+    currentEndBrace = 0;
     lastPiWidthIndex = 0;
     lasPiWidth = 0;
-    currentPiLength = 0;
-    placeBraces(0, currentEndBrace);
-}
+    checkToLoadMoreContent();
+
+    //Manually replace the first bracket to make sure it is correct
+    var el = document.getElementById("bracket-0");
+    if (el) {
+        el.parentNode.removeChild(el);
+    }
+    placeBraces(0, 1);
+};
 
 function createThumbnailElement(mediaID, imgWidth) {
     var thumbnail = document.createElement("img");
