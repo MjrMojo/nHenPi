@@ -57,7 +57,7 @@ def count(l, key):
 
 
 def get_latest_id():
-    request = requests.get(API_URL_NHENTAI + "all")
+    request = requests.get("https://nhentai.net/api/galleries/all")
     if not request.ok:
         return 312909, "2020-05-12 @ 16:08 (GMT+1200)"
     else:
