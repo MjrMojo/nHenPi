@@ -107,7 +107,11 @@ function placeBraces(startBrace, endBrace) {
     var svg = document.createElementNS(null, "svg");
 
     for (var i = startBrace; i < endBrace; i++) {
-        var startIndex = dataset[i]['location'][0] + 1;
+        if (i == 0 && dataset[i]['location'][0] == 0) {
+            var startIndex = dataset[i]['location'][0];
+        } else {
+            var startIndex = dataset[i]['location'][0] + 1;
+        }
         var stopIndex = dataset[i]['location'][1] + 1;
         var codeStr = innerHTML.substring(startIndex, stopIndex);
         var startStr = innerHTML.substring(lastPiWidthIndex, startIndex);
