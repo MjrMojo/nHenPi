@@ -215,7 +215,11 @@ function onBraceHover(event){
         style += 5;
     }
     style += "vmax; left: "
-    style += event.target.offsetLeft - 0.10 * event.target.offsetWidth;
+    if (key != 0) {
+        style += event.target.offsetLeft - 0.10 * event.target.offsetWidth;
+    } else {
+        style += event.target.offsetLeft;
+    }
     style += "px; width: ";
     style += event.target.offsetWidth * 1.20;
     style += "px; text-align: center; background-color: #404040;"
