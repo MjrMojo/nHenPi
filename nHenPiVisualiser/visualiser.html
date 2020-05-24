@@ -205,12 +205,17 @@ function createInfoDivInternals(key, div, text_at_top, imgWidth) {
 
 function onBraceHover(event){
     //Load the cover page and title of the filth the user is currently hovering over
+    key = parseInt(event.target.id.split('-')[1]);
+
     var prev_el = document.getElementById("doujin_info");
     if (prev_el) {
-        prev_el.parentNode.removeChild(prev_el);
+       if (prev_el.getAttribute('key') != key) {
+           prev_el.parentNode.removeChild(prev_el);
+       } else {
+            //If we've already got the node out, don't bother replacing it
+            return;
+       }
     }
-
-    key = parseInt(event.target.id.split('-')[1]);
 
     var doujin_info = document.createElement("div");
     doujin_info.setAttribute("id", "doujin_info");
@@ -235,6 +240,7 @@ function onBraceHover(event){
     style += event.target.offsetWidth * 1.20;
     style += "px; text-align: center; background-color: #404040;"
     doujin_info.setAttribute("style", style);
+    doujin_info.setAttribute("key", key);
 
     newDiv.appendChild(doujin_info);
 }
