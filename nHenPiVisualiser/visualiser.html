@@ -164,14 +164,14 @@ function handleMissingCover(image, media_id) {
     image.src = "loading.gif";
     fetch(req).then(
         function (response) {
-            image.src = "/cover_fetcher/" + media_id + ".jpg";
+            image.src = "/covers/" + media_id + ".jpg";
             console.log("Hello");
         });
 }
 
 function createThumbnailElement(mediaID, imgWidth) {
     var thumbnail = document.createElement("img");
-    thumbnail.setAttribute("src", "/cover_fetcher/" + mediaID + ".jpg");
+    thumbnail.setAttribute("src", "/covers/" + mediaID + ".jpg");
     thumbnail.setAttribute("id", "overlay_thumnail");
     thumbnail.setAttribute("width", imgWidth + "px"); 
     thumbnail.setAttribute("style", "text-align:center; margin: 0px;");

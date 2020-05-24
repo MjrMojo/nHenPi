@@ -42,5 +42,6 @@ def get_cover_from_nhentai(media_key):
         for section in request:
             f.write(section)
     subprocess.call(["./pixelate.sh", filename, filename])
+    subprocess.call(["mv", filename, f"../covers/{filename}"])
     print("Handling request took {:.2f}".format(time.time() - start_time))
     return "done"
