@@ -241,9 +241,7 @@ function createInfoDivInternals(key, div, text_at_top, imgWidth) {
 
     var title = document.createElement("p");
     title.innerHTML += dataset[key]['title'];
-
-    var style = "text-align: center; font-size: 14px; margin: 0px; align:center; font-family: 'Noto Sans',sans-serif; color: #d9d9d9; font-weight: 700; padding: 3px;";
-    title.setAttribute("style", style);
+    title.setAttribute("class", "item_text");
 
     if (text_at_top) {
         div.appendChild(title);
@@ -458,6 +456,14 @@ text.pi_text {
     width:100%;
     z-index:100;
 }
+
+.item_text {
+    text-align: center;
+    font-size: 14px;
+    margin: 0px;
+    color: #d9d9d9;
+    padding: 3px;
+ }
 </style>
 <div class="logo">
     <center><img src="logo.svg" style="align:center;" width="46" height="50"/></center>
