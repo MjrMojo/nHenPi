@@ -14,6 +14,8 @@ var lastPiWidthIndex = 0;
 var lastPiWidth = 0;
 var currentPiLength = 0;
 
+var r18CheckComplete = false;
+
 function appendAnotherPiChunk() {
     if (currentPiChunk < 100) {
         currentPiChunk += 1; //Increment currentPiChunk here to prevent race condition appending multiple chunks at once
@@ -41,8 +43,54 @@ function placeInitalElements() {
     document.body.appendChild(newDiv);
 }
 
+function dismissSplashScreen() {
+    r18CheckComplete = true;
+    var screen = document.getElementById("r18SplashScreen");
+    screen.parentNode.removeChild(screen);
+
+    document.getElementById("content_div").setAttribute("class", "pi_text");
+}
+
+function getUnder18sOuttaHere() {
+    history.back();
+}
+
+function displaySplashScreen() {
+    //Displays the legally mandated splash screen
+    var screen = document.createElement("div");
+    screen.setAttribute("class", "splash_screen");
+    screen.setAttribute("id", "r18SplashScreen");
+
+    var logo = document.createElement("img");
+    logo.setAttribute("src", "logo.svg");
+    logo.setAttribute("style", "width:10vmax;");
+
+    var text = document.createElement("text");
+    text.setAttribute("class", "splash_screen_text");
+    text.innerHTML = "<h1>AGE-RESTRICTED CONTENT WARNING</h1><br><h3>You must be 18 years of age or older to access this website</h3><br>I confirm that I am over 18 years of age, and understand that this website contains material featuring nudity and/or sexually-explicit material and/or adult themes that are age-restricted, and I confirm that by entering this website I agree that I am not offended by viewing such material.<br>";
+
+    var enterButton = document.createElement("button");
+    enterButton.innerHTML += "I'm over 18, let me in";
+    enterButton.setAttribute("onclick", "dismissSplashScreen()");
+
+    var newLine = document.createElement("text");
+    newLine.innerHTML += "<br>"
+
+    var exitButton = document.createElement("button");
+    exitButton.innerHTML += "I'm under 18, get me outta here!";
+    exitButton.setAttribute("onclick", "getUnder18sOuttaHere()");
+
+    screen.appendChild(logo);
+    screen.appendChild(text);
+    screen.appendChild(enterButton);
+    screen.appendChild(newLine);
+    screen.appendChild(exitButton);
+    document.body.appendChild(screen);
+}
+
 window.addEventListener('load', function () {
     placeInitalElements();
+    displaySplashScreen();
     placeBraces(0, currentEndBrace);
 });
 
@@ -175,7 +223,7 @@ function createThumbnailElement(mediaID, imgWidth) {
     var thumbnail = document.createElement("img");
     thumbnail.setAttribute("src", "/covers/" + mediaID + ".jpg");
     thumbnail.setAttribute("id", "overlay_thumnail");
-    thumbnail.setAttribute("width", imgWidth + "px"); 
+    thumbnail.setAttribute("width", imgWidth + "px");
     thumbnail.setAttribute("style", "text-align:center; margin: 0px;");
     thumbnail.setAttribute("onerror", "this.onerror=handleMissingCover(this, " + mediaID + ")");
     return thumbnail
@@ -207,45 +255,47 @@ function createInfoDivInternals(key, div, text_at_top, imgWidth) {
 }
 
 function onBraceHover(event){
-    //Load the cover page and title of the filth the user is currently hovering over
-    key = parseInt(event.target.id.split('-')[1]);
+    if (r18CheckComplete) {
+        //Load the cover page and title of the filth the user is currently hovering over
+        key = parseInt(event.target.id.split('-')[1]);
 
-    var prev_el = document.getElementById("doujin_info");
-    if (prev_el) {
-       if (prev_el.getAttribute('key') != key) {
-           prev_el.parentNode.removeChild(prev_el);
-       } else {
-            //If we've already got the node out, don't bother replacing it
-            return;
-       }
+        var prev_el = document.getElementById("doujin_info");
+        if (prev_el) {
+           if (prev_el.getAttribute('key') != key) {
+               prev_el.parentNode.removeChild(prev_el);
+           } else {
+                //If we've already got the node out, don't bother replacing it
+                return;
+           }
+        }
+
+        var doujin_info = document.createElement("div");
+        doujin_info.setAttribute("id", "doujin_info");
+
+        createInfoDivInternals(key, doujin_info, false, event.target.offsetWidth * 1.20);
+
+        var style = "";
+        if (key % 2 == 0) {
+            style += "position: absolute; bottom: ";
+            style += 4.75;
+        } else {
+            style += "position: absolute; top: ";
+            style += 5;
+        }
+        style += "vmax; left: "
+        if (key != 0) {
+            style += event.target.offsetLeft - 0.10 * event.target.offsetWidth;
+        } else {
+            style += event.target.offsetLeft;
+        }
+        style += "px; width: ";
+        style += event.target.offsetWidth * 1.20;
+        style += "px; text-align: center; background-color: #404040;"
+        doujin_info.setAttribute("style", style);
+        doujin_info.setAttribute("key", key);
+
+        document.getElementById("content_div").appendChild(doujin_info);
     }
-
-    var doujin_info = document.createElement("div");
-    doujin_info.setAttribute("id", "doujin_info");
-
-    createInfoDivInternals(key, doujin_info, false, event.target.offsetWidth * 1.20);
-
-    var style = "";
-    if (key % 2 == 0) {
-        style += "position: absolute; bottom: ";
-        style += 4.75;
-    } else {
-        style += "position: absolute; top: ";
-        style += 5;
-    }
-    style += "vmax; left: "
-    if (key != 0) {
-        style += event.target.offsetLeft - 0.10 * event.target.offsetWidth;
-    } else {
-        style += event.target.offsetLeft;
-    }
-    style += "px; width: ";
-    style += event.target.offsetWidth * 1.20;
-    style += "px; text-align: center; background-color: #404040;"
-    doujin_info.setAttribute("style", style);
-    doujin_info.setAttribute("key", key);
-
-    document.getElementById("content_div").appendChild(doujin_info);
 }
 
 
@@ -299,10 +349,66 @@ body {
     font-family: 'Noto Sans',sans-serif;
     color: #d9d9d9;
     -webkit-font-smoothing: antialiased;
+
 }
 
 .highlight {
   background-color: yellow;
+}
+
+.splash_screen_text {
+    padding-bottom: 1vmax;
+    vertical-align:midle;
+    align:center;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1vmax;
+}
+
+.splash_screen_text h1 {
+    color: #ed2553;
+}
+
+.splash_screen button {
+    background-color: #ed2553;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    padding-right: 12px;
+    padding-left: 12px;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    font-size: 100%;
+    height: 40px;
+    line-height: 40px;
+    margin: 3px;
+    -webkit-font-smoothing: antialiased;
+    margin: 5px;
+}
+
+div.splash_screen {
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+    width: 50%;
+    background-color: #404040;
+    padding: 1vmax;
+    text-align: center;
+    overflow-x:auto;
+    z-index:100;
 }
 
 div.pi_text {
@@ -312,6 +418,11 @@ div.pi_text {
     font-weight: 700;
     vertical-align: center;
     background-color: #1f1f1f;
+}
+
+div.pi_text.overlay {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
 }
 
 div.doujin_info {
