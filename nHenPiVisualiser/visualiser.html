@@ -27,22 +27,24 @@ window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 }
 
+function placeInitalElements() {
+    var newDiv = document.createElement("div");
+    newDiv.className = "pi_text overlay"; //Initially start blurred
+    newDiv.setAttribute("id", "content_div");
+    var newContent = document.createElement("text")
+    newContent.innerHTML = pi_digits[0];
+    currentPiLength += pi_digits[0].length;
+    newContent.setAttribute("id", "pi_text");
+    newContent.setAttribute("class", "pi_text");
+
+    newDiv.appendChild(newContent);
+    document.body.appendChild(newDiv);
+}
+
 window.addEventListener('load', function () {
+    placeInitalElements();
     placeBraces(0, currentEndBrace);
 });
-
-var newDiv = document.createElement("div");
-newDiv.className = "pi_text";
-var newContent = document.createElement("text")
-newContent.innerHTML = pi_digits[0];
-currentPiLength += pi_digits[0].length;
-newContent.setAttribute("id", "pi_text");
-newContent.setAttribute("style", "padding-top: 3px; padding-bottom: 3px; vertical-align: center; background-color: #1f1f1f;");
-
-newDiv.appendChild(newContent);
-
-var currentDiv = document.getElementById("div1");
-document.body.insertBefore(newDiv, currentDiv);
 
 function isLastBraceInViewport(endBrace) {
     var elem = document.getElementById("bracket-" + endBrace);
@@ -243,7 +245,7 @@ function onBraceHover(event){
     doujin_info.setAttribute("style", style);
     doujin_info.setAttribute("key", key);
 
-    newDiv.appendChild(doujin_info);
+    document.getElementById("content_div").appendChild(doujin_info);
 }
 
 
@@ -283,7 +285,7 @@ function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
     newBrace.setAttribute("style", style);
     newBrace.setAttribute("width", width + "px");
     newBrace.onmouseover = onBraceHover;
-    newDiv.appendChild(newBrace);
+    document.getElementById("content_div").appendChild(newBrace);
 }
 
 </script>
@@ -319,6 +321,13 @@ div.doujin_info {
     background-color: #404040;
     margin: 0px;
     align:center;
+}
+
+text.pi_text {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    vertical-align: center;
+    background-color: #1f1f1f;"
 }
 
 .textDimensionCalculation {
