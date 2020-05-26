@@ -18,6 +18,7 @@ import requests
 import json
 import time
 import re as ree
+from nhenpi_objectionable_tags import OBJECTIONABLE_TAG_SET
 
 API_URL_NHENTAI = 'https://nhentai.net/api/gallery/'
 REMOVED = "removed"
@@ -55,6 +56,13 @@ title_extract_regex = ree.compile(r'\([^()]*\)|\[[^[]*\]|\{[^{]*\}')
 def count(l, key):
     return sum(map(lambda x: x[2] == key, l))
 
+def is_objectionable(tags):
+    #returns true if the content has objectionable tags
+    for tag in tags:
+        if tag in OBJECTIONABLE_TAG_SET:
+            return True
+    #only return true if all tags are not in the objectionable set
+    return False
 
 def get_latest_id():
     request = requests.get("https://nhentai.net/api/galleries/all")
@@ -91,6 +99,8 @@ def get_data_on_this_filth(key):
         elif tag["type"] == "language":
             language = tag['name']
 
+    if is_objectionable(tags):
+        media_key = "obj"
     return title, language, tags, media_key
 
 
