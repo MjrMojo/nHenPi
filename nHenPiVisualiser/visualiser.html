@@ -301,35 +301,32 @@ function makeCurlyBraceReal(id, xpos, width, isBottom, colour){
     var newBrace = document.createElement('img');
     newBrace.setAttribute("src", "bracket.png");
     newBrace.setAttribute("id", "bracket-" + id);
-    var style = "";
-    style += "position: absolute; top: ";
     if (isBottom) {
         //Bottom brace
-        style += 1;
-        style += "vmax; transform: rotate(180deg);"
+        newBrace.setAttribute("class", "bottom_brace");
     } else {
         //Top brace
-        style += -3.5;
-        style += "vmax;";
+        newBrace.setAttribute("class", "top_brace");
     }
-    style += "left: ";
-    style += xpos;
-    style += "px;";
 
     switch (colour) {
         //filtering operations calculated with this tool: https://codepen.io/sosuke/pen/Pjoqqp
         case 1: //red
-            style += "filter: invert(19%) sepia(90%) saturate(5578%) hue-rotate(356deg) brightness(105%) contrast(120%);";
+            newBrace.setAttribute("class", newBrace.getAttribute("class") + " red");
             break;
         case 2: //blue
-            style += "filter: invert(9%) sepia(99%) saturate(7500%) hue-rotate(248deg) brightness(89%) contrast(144%);";
+            newBrace.setAttribute("class", newBrace.getAttribute("class") + " blue");
             break;
         default:
-            //do nothing leave them as black
-            style += "filter: invert(81%) sepia(15%) saturate(0%) hue-rotate(201deg) brightness(101%) contrast(104%);";
+            //filter to grey
+            newBrace.setAttribute("class", newBrace.getAttribute("class") + " grey");
             break;
     }
 
+    var style = "";
+    style += "left: ";
+    style += xpos;
+    style += "px;";
     newBrace.setAttribute("style", style);
     newBrace.setAttribute("width", width + "px");
     newBrace.onmouseover = onBraceHover;
@@ -463,7 +460,31 @@ text.pi_text {
     margin: 0px;
     color: #d9d9d9;
     padding: 3px;
- }
+}
+
+.bottom_brace {
+    position: absolute;
+    top: 1vmax;
+    transform: rotate(180deg);
+}
+
+.top_brace {
+    position: absolute;
+    top: -3.5vmax;
+}
+
+/* Brace colours */
+.red {
+    filter: invert(19%) sepia(90%) saturate(5578%) hue-rotate(356deg) brightness(105%) contrast(120%);
+}
+
+.blue {
+    filter: invert(9%) sepia(99%) saturate(7500%) hue-rotate(248deg) brightness(89%) contrast(144%);
+}
+
+.grey {
+    filter: invert(81%) sepia(15%) saturate(0%) hue-rotate(201deg) brightness(101%) contrast(104%);
+}
 </style>
 <div class="logo">
     <center><img src="logo.svg" style="align:center;" width="46" height="50"/></center>
