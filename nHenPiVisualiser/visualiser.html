@@ -13,6 +13,7 @@ var currentPiChunk = 0;
 var lastPiWidthIndex = 0;
 var lastPiWidth = 0;
 var currentPiLength = 0;
+var averageBracketWidth = 0;
 
 var r18CheckComplete = false;
 
@@ -152,7 +153,7 @@ var calculateWordDimensions = function(text, classes, escape) {
 
 function placeBraces(startBrace, endBrace) {
     var innerHTML = document.getElementById("pi_text").innerHTML;
-    var fudgeFactor = 15
+    var sumOfBracketWidths = 0;
 
     var svg = document.createElementNS(null, "svg");
 
@@ -163,11 +164,19 @@ function placeBraces(startBrace, endBrace) {
             var startIndex = dataset[i]['location'][0] + 1;
         }
         var stopIndex = dataset[i]['location'][1] + 1;
-        var codeStr = innerHTML.substring(startIndex, stopIndex);
         var startStr = innerHTML.substring(lastPiWidthIndex, startIndex);
 
         var barPos = calculateWordDimensions(startStr);
-        var barWidth = calculateWordDimensions(codeStr).width;
+
+        if (averageBracketWidth == 0) {
+            var codeStr = innerHTML.substring(startIndex, stopIndex);
+            var barWidth = calculateWordDimensions(codeStr).width;
+            if (i != 0) { //ignore the first bracket as it has an extra character
+                sumOfBracketWidths += barWidth
+            }
+        } else {
+            var barWidth = averageBracketWidth;
+        }
 
         makeCurlyBraceReal(i, barPos.width + lastPiWidth, barWidth, i % 2 == 1, i % 3);
 
@@ -179,6 +188,12 @@ function placeBraces(startBrace, endBrace) {
                 lastPiWidth += barPos.width; //for most doujins just adding on the width every hundreth is enough though
             }
         }
+    }
+
+    if (averageBracketWidth == 0) {
+        //We place 25 brackets at a time from the begining, however we ignore the first bracket as it is has a full stop
+        //in it. So we need to divide the sumOfBracketWidths by 24 to get the average bracket width.
+        averageBracketWidth = sumOfBracketWidths / 24;
     }
 }
 
@@ -198,6 +213,7 @@ window.onresize = function(event){
     currentEndBrace = 0;
     lastPiWidthIndex = 0;
     lasPiWidth = 0;
+    averageBracketWidth = 0;
     checkToLoadMoreContent();
 
     //Manually replace the first bracket to make sure it is correct
