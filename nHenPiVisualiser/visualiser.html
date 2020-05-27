@@ -231,7 +231,6 @@ function handleMissingCover(image, media_id) {
     fetch(req).then(
         function (response) {
             image.src = "/covers/" + media_id + ".jpg";
-            console.log("Hello");
         });
 }
 
