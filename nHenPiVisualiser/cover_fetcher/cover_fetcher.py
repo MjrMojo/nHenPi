@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_cors import CORS
+#from flask_cors import CORS
 from flask_api import status
 import requests
 import subprocess
@@ -10,7 +10,7 @@ NHENTAI_COVER_GALLERY = "https://t.nhentai.net/galleries/{}/cover.{}"
 
 app = Flask(__name__)
 
-CORS(app)
+#CORS(app)
 
 
 currently_processing = dict() #dict of semaphores with key of the media ID
@@ -43,13 +43,13 @@ def get_cover(media_key):
 
     #if we managed to retrieve one of the versions save it out
     #if its a png store it as a jpg any way
-    filename = "{}.jpg".format(media_key)
+    filename = "/var/www/nhenpi.net/covers/{}.jpg".format(media_key)
     request.raw.decode_content = True
     with open(filename, 'wb') as f:
         for section in request:
             f.write(section)
     subprocess.call(["./pixelate.sh", filename, filename])
-    subprocess.call(["mv", filename, f"../covers/{filename}"])
+    subprocess.call(["mv", filename, filename]) #f"/var/www/nhenpi.net/covers/{filename}"])
     print("Handling request took {:.2f}".format(time.time() - start_time))
     return "done"
 
