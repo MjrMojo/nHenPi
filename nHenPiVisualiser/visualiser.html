@@ -226,7 +226,7 @@ window.onresize = function(event){
 
 function handleMissingCover(image, media_id) {
     image.onerror = null;
-    var req = new Request("http://192.168.0.2:5000/fetch_cover/" + media_id);
+    var req = new Request("/fetch_cover/" + media_id);
     image.src = "loading.gif";
     fetch(req).then(
         function (response) {
