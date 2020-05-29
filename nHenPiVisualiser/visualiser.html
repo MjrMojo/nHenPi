@@ -18,7 +18,7 @@ var averageBracketWidth = 0;
 var r18CheckComplete = false;
 
 function appendAnotherPiChunk() {
-    if (currentPiChunk < 100) {
+    if (currentPiChunk < 21) {
         currentPiChunk += 1; //Increment currentPiChunk here to prevent race condition appending multiple chunks at once
         currentPiLength += pi_digits[currentPiChunk].length;
         document.getElementById("pi_text").innerHTML += pi_digits[currentPiChunk];
@@ -110,9 +110,9 @@ function checkToLoadMoreContent(event) {
         if (dataset[currentEndBrace + 25]['location'][1] > currentPiLength) {
             appendAnotherPiChunk();
         }
-
-        placeBraces(currentEndBrace, currentEndBrace + 25);
-        currentEndBrace += 25;
+        var temp = Math.min(currentEndBrace + 25, 6067) //Only display 6067 brackets on the first page
+        placeBraces(currentEndBrace, temp);
+        currentEndBrace = temp;
     }
 }
 
