@@ -1,0 +1,145 @@
+body {
+    overflow-y: hidden; /* Hide scrollbars */
+    min-height: 100%;
+    margin: 0;
+    background-color: #0d0d0d;
+    font-family: 'Noto Sans',sans-serif;
+    color: #d9d9d9;
+    -webkit-font-smoothing: antialiased;
+
+}
+
+.splash_screen_text {
+    padding-bottom: 1vmax;
+    vertical-align:midle;
+    align:center;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1vmax;
+}
+
+.splash_screen_text h1 {
+    color: #ed2553;
+}
+
+.splash_screen button {
+    background-color: #ed2553;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    padding-right: 12px;
+    padding-left: 12px;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    font-size: 100%;
+    height: 40px;
+    line-height: 40px;
+    margin: 3px;
+    -webkit-font-smoothing: antialiased;
+    margin: 5px;
+}
+
+div.splash_screen {
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+    width: 50%;
+    background-color: #404040;
+    padding: 1vmax;
+    text-align: center;
+    overflow-x:auto;
+    z-index:100;
+}
+
+div.pi_text {
+    position: absolute;
+    top: 50%;
+    font-size: 3vmax;
+    font-weight: 700;
+    vertical-align: center;
+    background-color: #1f1f1f;
+}
+
+div.pi_text.overlay {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
+div.doujin_info {
+    font-color: #d9d9d9;
+    text-align: center;
+    font-size: 1.5vmax;
+    background-color: #404040;
+    margin: 0px;
+    align:center;
+}
+
+text.pi_text {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    vertical-align: center;
+    background-color: #1f1f1f;"
+}
+
+.textDimensionCalculation {
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+    font-size: 3vmax;
+    font-weight: 700;
+}
+
+.logo {
+    position:fixed;
+    top:0;
+    background-color:#1f1f1f;
+    width:100%;
+    z-index:100;
+}
+
+.item_text {
+    text-align: center;
+    font-size: 14px;
+    margin: 0px;
+    color: #d9d9d9;
+    padding: 3px;
+}
+
+.bottom_brace {
+    position: absolute;
+    top: 1vmax;
+    transform: rotate(180deg);
+}
+
+.top_brace {
+    position: absolute;
+    top: -3.5vmax;
+}
+
+/* Brace colours */
+.red {
+    filter: invert(19%) sepia(90%) saturate(5578%) hue-rotate(356deg) brightness(105%) contrast(120%);
+}
+
+.blue {
+    filter: invert(9%) sepia(99%) saturate(7500%) hue-rotate(248deg) brightness(89%) contrast(144%);
+}
+
+.grey {
+    filter: invert(81%) sepia(15%) saturate(0%) hue-rotate(201deg) brightness(101%) contrast(104%);
+}
