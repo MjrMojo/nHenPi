@@ -10,8 +10,6 @@ const height = window.innerHeight|| document.documentElement.clientHeight|| docu
 
 var currentEndBrace = 25;
 var currentPiChunk = 0;
-var lastPiWidthIndex = 0;
-var lastPiWidth = 0;
 var currentPiLength = 0;
 var averageBracketWidth = 0;
 
@@ -164,9 +162,9 @@ function placeBraces(startBrace, endBrace) {
             var startIndex = dataset[i]['location'][0] + 1;
         }
         var stopIndex = dataset[i]['location'][1] + 1;
-        var startStr = innerHTML.substring(lastPiWidthIndex, startIndex);
+        var startStr = innerHTML.substring(0, startIndex);
 
-        var barPos = calculateWordDimensions(startStr);
+        var barPos = calculateWordDimensions(startStr).width;
 
         if (averageBracketWidth == 0) {
             var codeStr = innerHTML.substring(startIndex, stopIndex);
@@ -178,16 +176,7 @@ function placeBraces(startBrace, endBrace) {
             var barWidth = averageBracketWidth;
         }
 
-        makeCurlyBraceReal(i, barPos.width + lastPiWidth, barWidth, i % 2 == 1, i % 3);
-
-        if (i % 50 == 0) {
-            lastPiWidthIndex = startIndex;
-            if (i % 200 == 0) { //every 200 doujins do the more accurate calculation to prevent too big an error building
-                lastPiWidth = calculateWordDimensions(innerHTML.substring(0, startIndex)).width;
-            } else {
-                lastPiWidth += barPos.width; //for most doujins just adding on the width every hundreth is enough though
-            }
-        }
+        makeCurlyBraceReal(i, barPos, barWidth, i % 2 == 1, i % 3);
     }
 
     if (averageBracketWidth == 0) {
