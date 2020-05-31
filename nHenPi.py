@@ -69,10 +69,10 @@ def is_objectionable(tags):
 def get_latest_id():
     request = requests.get("https://nhentai.net/api/galleries/all")
     if not request.ok:
-        return 312909, "2020-05-12 @ 16:08 (GMT+1200)"
+        return 312909, "2020-05-12 @ 16:08 (GMT+1200)", 00
     else:
         first_result = request.json()["result"][0]
-        return int(first_result["id"]), time.strftime("%Y-%m-%d @ %H:%M (GMT%z)")
+        return int(first_result["id"]), time.strftime("%Y-%m-%d @ %H:%M (GMT%z)"), round(time.time())
 
 
 def get_data_on_this_filth(key):
@@ -107,7 +107,7 @@ def get_data_on_this_filth(key):
     return title, language, tags, media_key
 
 
-latest_key, latest_key_time_stamp = get_latest_id();
+latest_key, latest_key_time_stamp, latest_key_time_stamp_unix = get_latest_id();
 
 sources = []
 keys = set() #the set of already found keys to prevent multiple request
@@ -165,11 +165,12 @@ output_file.close()
 
 output_file = open("visualiser_dataset.js", "w", encoding='utf-8')
 
+output_file.write(f"dataset_time = \"{latest_key_time_stamp_unix}\";\n")
 output_file.write("dataset = [\n")
 for source in sources:
     output_file.write(VISUALISER_OUTPUT.format(source[1], source[4],
                                                source[3], source[5][0],
                                                source[5][1], source[2],
                                                source[0]))
-output_file.write("]")
+output_file.write("]\n")
 output_file.close()
