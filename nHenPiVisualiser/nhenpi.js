@@ -159,7 +159,7 @@ function checkToLoadMoreContent(event) {
         if (dataset[currentEndBrace + 25]['location'][1] > currentPiLength) {
             appendAnotherPiChunk();
         }
-        var temp = Math.min(currentEndBrace + 25, 6067) //Only display 6067 brackets on the first page
+        var temp = Math.min(currentEndBrace + 25, 6078) //Only display 6078 brackets on the first page
         placeBraces(currentEndBrace, temp);
         currentEndBrace = temp;
     }
