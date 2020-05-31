@@ -55,7 +55,7 @@ div.splash_screen {
     -ms-transform: translateY(-50%) translateX(-50%);
     transform: translateY(-50%) translateX(-50%);
     width: 50%;
-    background-color: #404040;
+    background-color: #1f1f1f;
     padding: 1vmax;
     text-align: center;
     overflow-x:auto;
