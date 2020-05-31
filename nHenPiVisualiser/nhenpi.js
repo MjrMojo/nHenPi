@@ -7,6 +7,7 @@ var currentPiLength = 0;
 var averageBracketWidth = 0;
 
 var r18CheckComplete = false;
+var aboutSplashScreenUp = false;
 
 function appendAnotherPiChunk() {
     if (currentPiChunk < 21) {
@@ -35,7 +36,7 @@ function placeInitalElements() {
     document.body.appendChild(newDiv);
 }
 
-function dismissSplashScreen() {
+function dismissR18SplashScreen() {
     r18CheckComplete = true;
     var screen = document.getElementById("r18SplashScreen");
     screen.parentNode.removeChild(screen);
@@ -47,7 +48,63 @@ function getUnder18sOuttaHere() {
     history.back();
 }
 
-function displaySplashScreen() {
+function dismissInfoSplashScreen() {
+    var screen = document.getElementById("infoSplashScreen");
+    screen.parentNode.removeChild(screen);
+
+    //unblur main screen if the R18 check has been completed
+    if (r18CheckComplete) {
+        document.getElementById("content_div").setAttribute("class", "pi_text");
+    }
+    aboutSplashScreenUp = false; //enable doujin info to appear
+}
+
+function displayInfoSplashScreen() {
+    console.log("Splash screen begins");
+    if (!aboutSplashScreenUp) { //only activate if the r18 check has been completed
+        //blur out background and temporarily prevent doujin info from appearing
+        document.getElementById("content_div").setAttribute("class", "pi_text overlay");
+        aboutSplashScreenUp = true;
+
+        var screen = document.createElement("div");
+        screen.setAttribute("class", "splash_screen");
+        screen.setAttribute("id", "infoSplashScreen");
+
+        var logo = document.createElement("img");
+        logo.setAttribute("src", "logo.svg");
+        logo.setAttribute("style", "width:10vmax;");
+        logo.setAttribute("title", "Does the logo have to be here? No, but I spent far too long making it to not use it at every opportunity");
+
+        var text = document.createElement("text");
+        text.setAttribute("class", "splash_screen_text");
+        text.innerHTML = "<h1 title='Technically all of them, but thats not a satisfying answer.'>How many nhentai doujins are in π?</h1>" +
+                         "Attempting to answer this simple question started this project. After answering that question I had a <i>good idea</i>&#153 " +
+                         "and after roughly 40 hours of work this abomination has been unleashed upon the world." +
+                         "<br><br><span title=\"I've spent more time casually looking at hentai in the past month than in the rest of my life combined\">God I'm a degenerate.</span><br><br>" +
+                         "The bracket colours have no meaning, they're just to make it easier to pick out codes in dense segments. " +
+                         "Currently <i title='/s'>only</i> ~20&nbsp000 digits of π, containing 6067 doujins can be accessed. I have run the doujin finder on 100&nbsp000 digits of π but having them on the website " +
+                         "made it unbearably laggy as you scrolled further and further. Eventually I will add multiple pages to allow all 100&nbsp000 digits of filth and degeneracy to be " +
+                         "reachable.<br><br>" +
+                         "Contact: <a href='mailto:nhenpi@gmail.com'>nhenpi@gmail.com</a><br>" +
+                         "GitHub: <a href='https://github.com/MjrMojo/nHenPi'>nHenPi</a><br><br><i class='smaller'>Please submit bug reports to the GitHub page</i><br><br>";
+
+        var exitButton = document.createElement("button");
+        exitButton.innerHTML += "Done";
+        exitButton.setAttribute("onclick", "dismissInfoSplashScreen()");
+
+        //var devModeButton = document.createElement("button");
+        //devModeButton.innerHTML += "Enter Developer Mode";
+        //devModeButton.setAttribute("onclick", "dismissSplashScreen()");
+
+        screen.appendChild(logo);
+        screen.appendChild(text);
+        screen.appendChild(exitButton);
+        //screen.appendChild(devModeButton);
+        document.body.appendChild(screen);
+    }
+}
+
+function displayR18SplashScreen() {
     //Displays the legally mandated splash screen
     var screen = document.createElement("div");
     screen.setAttribute("class", "splash_screen");
@@ -63,7 +120,7 @@ function displaySplashScreen() {
 
     var enterButton = document.createElement("button");
     enterButton.innerHTML += "I'm over 18, let me in";
-    enterButton.setAttribute("onclick", "dismissSplashScreen()");
+    enterButton.setAttribute("onclick", "dismissR18SplashScreen()");
 
     var newLine = document.createElement("text");
     newLine.innerHTML += "<br>"
@@ -82,7 +139,7 @@ function displaySplashScreen() {
 
 window.addEventListener('load', function () {
     placeInitalElements();
-    displaySplashScreen();
+    displayR18SplashScreen();
     placeBraces(0, 25);
     checkToLoadMoreContent();
 });
@@ -262,7 +319,7 @@ function createInfoDivInternals(key, div, text_at_top, imgWidth) {
 }
 
 function onBraceHover(event){
-    if (r18CheckComplete) {
+    if (r18CheckComplete && !aboutSplashScreenUp) {
         //Load the cover page and title of the filth the user is currently hovering over
         key = parseInt(event.target.id.split('-')[1]);
 
