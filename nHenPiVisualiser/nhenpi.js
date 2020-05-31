@@ -241,6 +241,7 @@ function createInfoDivInternals(key, div, text_at_top, imgWidth) {
     var title = document.createElement("p");
     title.innerHTML += dataset[key]['title'];
     title.setAttribute("class", "item_text");
+    title.setAttribute("lang", dataset[key]["language"]);
 
     if (text_at_top) {
         div.appendChild(title);
