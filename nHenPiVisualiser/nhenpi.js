@@ -59,6 +59,19 @@ function dismissInfoSplashScreen() {
     aboutSplashScreenUp = false; //enable doujin info to appear
 }
 
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+  var sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' @ ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
+
 function displayInfoSplashScreen() {
     console.log("Splash screen begins");
     if (!aboutSplashScreenUp) { //only activate if the r18 check has been completed
@@ -86,7 +99,7 @@ function displayInfoSplashScreen() {
                          "made it unbearably laggy as you scrolled further and further. Eventually I will add multiple pages to allow all 100&nbsp000 digits of filth and degeneracy to be " +
                          "reachable.<br><br>" +
                          "Contact: <a href='mailto:nhenpi@gmail.com'>nhenpi@gmail.com</a><br>" +
-                         "GitHub: <a href='https://github.com/MjrMojo/nHenPi'>nHenPi</a><br><br><i class='smaller'>Please submit bug reports to the GitHub page</i><br><br>";
+                         "GitHub: <a href='https://github.com/MjrMojo/nHenPi'>nHenPi</a><br><br><i class='smaller'>Doujin snapshot taken on " + timeConverter(dataset_time) + "</i><br><br>";
 
         var exitButton = document.createElement("button");
         exitButton.innerHTML += "Done";
