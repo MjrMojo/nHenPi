@@ -219,12 +219,16 @@ function handleMissingCover(image, media_id) {
             }
         }).catch(function () {
             image.src = "error_loli.gif";
+            image.setAttribute("title", "Something went wrong when getting this cover, try again");
         });
 }
 
 function createThumbnailElement(mediaID, imgWidth) {
     var thumbnail = document.createElement("img");
     thumbnail.setAttribute("src", "/covers/" + mediaID + ".jpg");
+    if (mediaID == "obj") {
+        thumbnail.setAttribute("title", "This doujin contains objectionable content so the cover cannot be displayed");
+    }
     thumbnail.setAttribute("id", "overlay_thumnail");
     thumbnail.setAttribute("width", imgWidth + "px");
     thumbnail.setAttribute("style", "text-align:center; margin: 0px;");
