@@ -212,7 +212,11 @@ function handleMissingCover(image, media_id) {
     image.src = "loading.gif";
     fetch(req).then(
         function (response) {
-            image.src = "/covers/" + media_id + ".jpg";
+            if (response.ok) {
+                image.src = "/covers/" + media_id + ".jpg";
+            } else {
+                throw new Error("Request failed to get image");
+            }
         }).catch(function () {
             image.src = "error_loli.gif";
         });
