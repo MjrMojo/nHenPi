@@ -83,7 +83,8 @@ function displaySplashScreen() {
 window.addEventListener('load', function () {
     placeInitalElements();
     displaySplashScreen();
-    placeBraces(0, currentEndBrace);
+    placeBraces(0, 25);
+    checkToLoadMoreContent();
 });
 
 function isLastBraceInViewport(endBrace) {
