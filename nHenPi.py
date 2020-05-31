@@ -23,6 +23,8 @@ from nhenpi_objectionable_tags import OBJECTIONABLE_TAG_SET
 API_URL_NHENTAI = 'https://nhentai.net/api/gallery/'
 REMOVED = "removed"
 
+ACCEPTED_LANGUAGES = set(["chinese", "japanese", "english"])
+
 OUTPUT_FORMAT_STRING = """
 
 ============{:^6}============
@@ -97,7 +99,8 @@ def get_data_on_this_filth(key):
         if tag["type"] == 'tag':
             tags.append(tag['name'])
         elif tag["type"] == "language":
-            language = tag['name']
+            if tag["name"] in ACCEPTED_LANGUAGES:
+                language = tag['name']
 
     if is_objectionable(tags):
         media_key = "obj"
